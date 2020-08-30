@@ -30,10 +30,16 @@ class BankAccountTest {
     }
 
     @org.junit.jupiter.api.Test
-    void withdraw() {
-        double balance = account.withdraw(200.00, true);
-        assertEquals(800.00, balance, 0);
+    void withdraw_branch() {
+        double balance = account.withdraw(600.00, true);
+        assertEquals(400.00, balance, 0);
     }
+
+    @org.junit.jupiter.api.Test
+    void withdraw() {
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(600.00, false));
+    }
+
 
     @org.junit.jupiter.api.Test
     void isChecking_true() {

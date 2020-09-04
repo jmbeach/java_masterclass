@@ -26,23 +26,31 @@ public class Main {
 //                return employee1.getName().compareToIgnoreCase(employee2.getName());
 //            }
 //        });
+//
+//        Collections.sort(employees, (Employee employee1, Employee employee2) -> employee1.getName().compareToIgnoreCase(employee2.getName()));
+//
+//        for(Employee employee: employees) {
+//            System.out.println(employee.getName());
+//        }
+//
+//        String test1 = doStringStuff(new UpperConcat() {
+//            @Override
+//            public String upperAndConcat(String s1, String s2) {
+//                return s1.toUpperCase() + s2.toUpperCase();
+//            }
+//        }, "it ", "works");
+//        System.out.println(test1);
+//
+//        UpperConcat uc = (String s1, String s2) -> {
+//            String result = s1.toUpperCase() + s2.toUpperCase();
+//            return result;
+//        };
+//        String x = doStringStuff(uc, employees.get(0).getName(), employees.get(1).getName());
+//        System.out.println(x);
 
-        Collections.sort(employees, (Employee employee1, Employee employee2) -> employee1.getName().compareToIgnoreCase(employee2.getName()));
-
-        for(Employee employee: employees) {
-            System.out.println(employee.getName());
-        }
-
-        String test1 = doStringStuff(new UpperConcat() {
-            @Override
-            public String upperAndConcat(String s1, String s2) {
-                return s1.toUpperCase() + s2.toUpperCase();
-            }
-        }, "it ", "works");
-        System.out.println(test1);
-
-        String x = doStringStuff((String s1, String s2) -> s1.toUpperCase() + s2.toUpperCase(), employees.get(0).getName(), employees.get(1).getName());
-        System.out.println(x);
+        AnotherClass anotherClass = new AnotherClass();
+        String s = anotherClass.doSomething();
+        System.out.println(s);
     }
 
     public final static String doStringStuff(UpperConcat uc, String s1, String s2) {
@@ -78,4 +86,50 @@ class Employee {
 
 interface UpperConcat {
     public String upperAndConcat(String s1, String s2);
+}
+
+class AnotherClass {
+    public String doSomething() {
+        int i = 0;
+        UpperConcat uc = (String s1, String s2) -> {
+            System.out.println("The lambda class's name is: " + getClass().getSimpleName());
+            System.out.println(" i in The lambda class's name is: " + i);
+            return s1.toUpperCase() + s2.toUpperCase();
+        };
+
+
+//        UpperConcat uc = new UpperConcat() {
+//            @Override
+//            public String upperAndConcat(String s1, String s2) {
+//                return s1.toUpperCase() + s2.toUpperCase();
+//            }
+//        };
+
+        System.out.println("The AnotherClass class's name is: " + getClass().getSimpleName());
+
+        return Main.doStringStuff(uc, "TEST", "TEST @");
+
+//        return Main.doStringStuff(new UpperConcat() {
+//            @Override
+//            public String upperAndConcat(String s1, String s2) {
+//                System.out.println("The anonymous class's name is: " + getClass().getSimpleName());
+//                return s1.toUpperCase() + s2.toUpperCase();
+//            }
+//        }, "String1", "String2");
+    }
+
+    public void printValue() {
+        int number = 25;
+        Runnable r = () -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("The value is: " + number);
+        };
+
+        new Thread(r).start();
+    }
 }
